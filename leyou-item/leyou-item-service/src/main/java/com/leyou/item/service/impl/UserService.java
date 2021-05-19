@@ -1,11 +1,11 @@
-package com.leyou.itme.service.impl;
+package com.leyou.item.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.leyou.common.pojo.PageResult;
 import com.leyou.item.mapper.UserMapper;
 import com.leyou.item.pojo.User;
-import com.leyou.itme.service.IUserService;
+import com.leyou.item.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;

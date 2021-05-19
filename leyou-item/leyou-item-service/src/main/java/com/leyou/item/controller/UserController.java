@@ -1,9 +1,8 @@
-package com.leyou.itme.controller;
+package com.leyou.item.controller;
 
 import com.leyou.common.pojo.PageResult;
-import com.leyou.item.pojo.RolePojo;
 import com.leyou.item.pojo.User;
-import com.leyou.itme.service.IUserService;
+import com.leyou.item.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @Controller

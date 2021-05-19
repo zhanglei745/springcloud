@@ -1,4 +1,4 @@
-package com.leyou.itme.service;
+package com.leyou.item.service;
 
 import com.leyou.common.pojo.PageResult;
 import com.leyou.item.pojo.User;

@@ -1,8 +1,7 @@
-package com.leyou.itme.controller;
+package com.leyou.item.controller;
 
-
-import com.leyou.item.pojo.GoodsType;
-import com.leyou.itme.service.IGoodsType;
+import com.leyou.item.pojo.CategoryPojo;
+import com.leyou.item.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,22 +13,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("goodstype")
-public class GoodsTypeController {
-
+@RequestMapping("category")
+public class CategoryController {
     @Autowired
-    private IGoodsType goodsTypeService;
+    private ICategoryService categoryService;
 
     @GetMapping("list")
-    public ResponseEntity<List<GoodsType>> queryGoodsTypeByPid(@RequestParam(value = "pid",defaultValue = "0")Integer pid){
-        if(pid==null || pid < 0){
+    public ResponseEntity<List<CategoryPojo>> queryByPid(@RequestParam(value = "pid",defaultValue = "0") Long pid){
+        //参数校验
+        if(null==pid || pid<0){
             return ResponseEntity.badRequest().build();
         }
-        List<GoodsType> goodsTypes = goodsTypeService.queryGoodsTypeByPid(pid);
-        if(CollectionUtils.isEmpty(goodsTypes)){
+        //数据获取
+        List<CategoryPojo> list = this.categoryService.queryListByPid(pid);
+        if(CollectionUtils.isEmpty(list)){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(goodsTypes);
+        //返回数据
+        return ResponseEntity.ok(list);
 
     }
 

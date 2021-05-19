@@ -1,4 +1,4 @@
-package com.leyou.itme.service;
+package com.leyou.item.service;
 
 import com.leyou.item.pojo.SpecGroup;
 

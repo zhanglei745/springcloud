@@ -1,8 +1,8 @@
-package com.leyou.itme.service.impl;
+package com.leyou.item.service.impl;
 
 import com.leyou.item.mapper.GoodsTypeMapper;
 import com.leyou.item.pojo.GoodsType;
-import com.leyou.itme.service.IGoodsType;
+import com.leyou.item.service.IGoodsType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

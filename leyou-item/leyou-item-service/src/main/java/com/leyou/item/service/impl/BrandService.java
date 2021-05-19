@@ -1,12 +1,11 @@
-package com.leyou.itme.service.impl;
+package com.leyou.item.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.leyou.common.pojo.PageResult;
 import com.leyou.item.mapper.BrandMapper;
 import com.leyou.item.pojo.BrandPojo;
-import com.leyou.itme.service.IBrandService;
-import netscape.security.ForbiddenTargetException;
+import com.leyou.item.service.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -49,9 +48,7 @@ public class BrandService implements IBrandService {
 
         this.brandMapper.insertSelective(brand);
 
-        cids.forEach(cid->{
-            this.brandMapper.insertBrandCategorys(brand.getId(),cid);
-        });
+        cids.forEach(cid-> this.brandMapper.insertBrandCategorys(brand.getId(),cid));
 
     }
 }

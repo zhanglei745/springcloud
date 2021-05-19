@@ -1,7 +1,7 @@
-package com.leyou.itme.controller;
+package com.leyou.item.controller;
 
 import com.leyou.item.pojo.GoodsPosition;
-import com.leyou.itme.service.impl.GoodsPositionService;
+import com.leyou.item.service.impl.GoodsPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

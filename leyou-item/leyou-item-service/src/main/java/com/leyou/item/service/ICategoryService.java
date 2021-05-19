@@ -1,4 +1,4 @@
-package com.leyou.itme.service;
+package com.leyou.item.service;
 
 import com.leyou.item.pojo.CategoryPojo;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ICategoryService {
 
-    public List<CategoryPojo> queryListByPid(Long pid);
+    List<CategoryPojo> queryListByPid(Long pid);
 
 
 }
