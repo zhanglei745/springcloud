@@ -21,6 +21,7 @@ public class MyCorsConfiguration {
 //        corsConfiguration.addAllowedOrigin(CorsConfiguration.ALL);
         corsConfiguration.setAllowCredentials(true);//允许cookie
         corsConfiguration.addAllowedHeader("*");//允许携带任何头部信息
+
         corsConfiguration.addAllowedMethod("*");//所有请求方式都支持
 
         //初始化cors资源对象

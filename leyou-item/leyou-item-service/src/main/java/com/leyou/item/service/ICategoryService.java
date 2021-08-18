@@ -8,5 +8,6 @@ public interface ICategoryService {
 
     List<CategoryPojo> queryListByPid(Long pid);
 
+    List<String> queryNameByIds(List<Long> ids);
 
 }
