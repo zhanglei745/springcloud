@@ -14,7 +14,7 @@ public class Sku {
     private String images;
     private Long price;
     private String ownSpec;
-    private String indexex;
+    private String indexes;
     private Boolean enable;
     private Date createTime;
     private Date lastUpdateTime;
@@ -69,12 +69,12 @@ public class Sku {
         this.ownSpec = ownSpec;
     }
 
-    public String getIndexex() {
-        return indexex;
+    public String getIndexes() {
+        return indexes;
     }
 
-    public void setIndexex(String indexex) {
-        this.indexex = indexex;
+    public void setIndexes(String indexes) {
+        this.indexes = indexes;
     }
 
     public Boolean getEnable() {
