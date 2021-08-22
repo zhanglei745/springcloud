@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +35,15 @@ public class BrandController {
     public ResponseEntity<Void> saveBrand(BrandPojo brand,@RequestParam(value = "cids") List<Long> cids){
             this.brandService.save(brand,cids);
             return ResponseEntity.status(HttpStatus.CREATED).build();//返回201
+    }
+
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<BrandPojo>> queryBrandByCid(@PathVariable("cid")Long cid){
+        List<BrandPojo> brands = this.brandService.queryBrandByCid(cid);
+        if(CollectionUtils.isEmpty(brands)){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(brands);
     }
 
 }

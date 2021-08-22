@@ -9,4 +9,6 @@ public interface IBrandService {
     PageResult<BrandPojo> queryBrands(String key, Integer page, Integer rows, String sortBy, Boolean desc);
 
     void save(BrandPojo brand, List<Long> cids);
+
+    List<BrandPojo> queryBrandByCid(Long cid);
 }

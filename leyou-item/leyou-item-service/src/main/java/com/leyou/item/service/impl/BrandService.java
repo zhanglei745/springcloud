@@ -51,4 +51,10 @@ public class BrandService implements IBrandService {
         cids.forEach(cid-> this.brandMapper.insertBrandCategorys(brand.getId(),cid));
 
     }
+
+    @Override
+    public List<BrandPojo> queryBrandByCid(Long cid) {
+
+        return this.brandMapper.selectBrandByCid(cid);
+    }
 }
