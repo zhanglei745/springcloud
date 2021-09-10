@@ -34,4 +34,15 @@ public class CategoryController {
 
     }
 
+    @GetMapping
+    public ResponseEntity<List<String>> queryNamesByIds(@RequestParam List<Long> ids){
+        List<String> names = this.categoryService.queryNameByIds(ids);
+        if(CollectionUtils.isEmpty(names)){
+            return ResponseEntity.notFound().build();
+        }
+        //返回数据
+        return ResponseEntity.ok(names);
+    }
+
+
 }
