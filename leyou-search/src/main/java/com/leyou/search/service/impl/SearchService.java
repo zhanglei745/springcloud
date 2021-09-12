@@ -4,20 +4,35 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leyou.common.pojo.PageResult;
 import com.leyou.item.pojo.*;
 import com.leyou.search.client.BrandClient;
 import com.leyou.search.client.CategoryClient;
 import com.leyou.search.client.GoodsClient;
 import com.leyou.search.client.SpecificationClient;
+import com.leyou.search.mapper.GoodsRepository;
 import com.leyou.search.pojo.Goods;
+import com.leyou.search.pojo.SearchResult;
+import com.leyou.search.query.SearchQuery;
 import com.leyou.search.service.ISearchService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.checkerframework.checker.units.qual.A;
+import org.elasticsearch.index.query.Operator;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.LongTerms;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SearchService implements ISearchService {
@@ -32,6 +47,8 @@ public class SearchService implements ISearchService {
     private GoodsClient goodsClient;
     @Autowired
     private SpecificationClient specificationClient;
+    @Autowired
+    private GoodsRepository goodsRepository;
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -105,6 +122,59 @@ public class SearchService implements ISearchService {
         return goods;
     }
 
+    @Override
+    public SearchResult search(SearchQuery query) {
+
+        if(StringUtils.isBlank(query.getKey())){
+            return null;
+        }
+
+        //自定义查询构建器
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        //添加查询条件
+        queryBuilder.withQuery(QueryBuilders.matchQuery("all",query.getKey()).operator(Operator.AND));
+        //添加分页,分页页面从0开始，此处页码要 -1
+        queryBuilder.withPageable(PageRequest.of(query.getPage()-1,query.getSize()));
+        //添加结果过滤,包含三个字段，其他排除
+        queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{"id","skus","subTitle"},null));
+
+        //添加分类和品牌的聚合
+        String categoriesAggName = "categories";
+        String brandsAggName = "brands";
+        queryBuilder.addAggregation(AggregationBuilders.terms(categoriesAggName).field("cid3"));
+        queryBuilder.addAggregation(AggregationBuilders.terms(brandsAggName).field("brandId"));
+
+        //执行查询，获取结果集
+        AggregatedPage<Goods> goodsPage = (AggregatedPage<Goods>)goodsRepository.search(queryBuilder.build());
+        //解析聚合后的结果集
+
+        List<Map<String,Object>> categories = getCategoriesAggResult(goodsPage.getAggregation(categoriesAggName));
+        List<BrandPojo> brands = getBrandsAggResult(goodsPage.getAggregation(brandsAggName));
+
+
+        return new SearchResult(goodsPage.getTotalElements(),goodsPage.getTotalPages(),goodsPage.getContent(),categories,brands);
+    }
+
+    private List<Map<String,Object>> getCategoriesAggResult(Aggregation aggregation){
+        LongTerms terms = (LongTerms) aggregation;
+        //获取集合中的桶
+        return terms.getBuckets().stream().map(bucket->{
+            Map<String,Object> map = new HashMap<>();
+            Long id = bucket.getKeyAsNumber().longValue();
+            List<String> names = this.categoryClient.queryNamesByIds(Arrays.asList(id));
+            map.put("id",id);
+            map.put("name",names.get(0));
+            return map;
+        }).collect(Collectors.toList());
+    }
+    private List<BrandPojo> getBrandsAggResult(Aggregation aggregation){
+        LongTerms terms = (LongTerms) aggregation;
+        //获取集合中的桶
+        return terms.getBuckets().stream().map(bucket->{
+            return this.brandClient.queryBrandById(bucket.getKeyAsNumber().longValue());
+
+        }).collect(Collectors.toList());
+    }
 
     private String chooseSegment(String value,SpecParam specParam){
         Double val = NumberUtils.toDouble(value);

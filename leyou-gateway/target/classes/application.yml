@@ -8,8 +8,18 @@ eureka:
     service-url:
       defaultZone: http://localhost:10086/eureka
     registry-fetch-interval-seconds: 5 #拉取服务的间隔时间
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
 zuul:
   prefix: /api
   routes:
     item-service: /item/** #路由的item的微服务
-
+    search-service: /search/** #路由到search微服务
+ribbon:
+  ConnectTimeout: 4000 # 连接超时时间(ms)
+  ReadTimeout: 2000 # 通信超时时间(ms)
+  OkToRetryOnAllOperations: true # 是否对所有操作重试
+  MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 1 # 同一实例的重试次数
