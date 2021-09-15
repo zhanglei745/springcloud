@@ -1,9 +1,12 @@
 package com.leyou.search.query;
 
+import java.util.Map;
+
 public class SearchQuery {
 
     private String key;//搜索条件
     private Integer page;//当前页
+    private Map<String,Object> filter;
     private static final Integer DEFAULT_SEIZ = 20;//固定页面大小
     private static final Integer DEFAULT_PAGE = 1;//默认页
 
@@ -29,4 +32,12 @@ public class SearchQuery {
    public Integer getSize(){
         return DEFAULT_SEIZ;
    }
+
+    public Map<String, Object> getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Map<String, Object> filter) {
+        this.filter = filter;
+    }
 }
