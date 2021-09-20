@@ -2,7 +2,6 @@ package com.leyou.search.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leyou.common.pojo.PageResult;
 import com.leyou.item.pojo.*;
@@ -35,6 +34,7 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,7 +57,7 @@ public class SearchService implements ISearchService {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Override
-    public Goods buildGoods(Spu spu) throws JsonProcessingException {
+    public Goods buildGoods(Spu spu) throws IOException {
         Goods goods = new Goods();
 
         //根据分类id获取分类名称

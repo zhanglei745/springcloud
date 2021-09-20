@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,7 @@ public class ElasticsearchTest {
             List<Goods> goodsList = items.stream().map(spuBo -> {
                 try {
                     return this.searchService.buildGoods(spuBo);
-                } catch (JsonProcessingException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 return null;

@@ -7,9 +7,11 @@ import com.leyou.search.pojo.Goods;
 import com.leyou.search.pojo.SearchResult;
 import com.leyou.search.query.SearchQuery;
 
+import java.io.IOException;
+
 public interface ISearchService {
 
-    public Goods buildGoods(Spu spu) throws JsonProcessingException;
+    public Goods buildGoods(Spu spu) throws IOException;
 
     SearchResult search(SearchQuery query);
 }
