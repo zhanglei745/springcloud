@@ -1,4 +1,4 @@
-package com.leyou.item.controller;
+package com.leyou.item.controller.goods;
 
 import com.leyou.common.pojo.PageResult;
 import com.leyou.item.pojo.BrandPojo;

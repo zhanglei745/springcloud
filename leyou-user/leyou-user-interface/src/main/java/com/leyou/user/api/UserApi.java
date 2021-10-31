@@ -12,5 +12,5 @@ public interface UserApi {
      * @return
      */
     @GetMapping("query")
-    User queryUser(@RequestParam("username")String username, @RequestParam("password")String password);
+    User queryUser(@RequestParam("username")String username);
 }

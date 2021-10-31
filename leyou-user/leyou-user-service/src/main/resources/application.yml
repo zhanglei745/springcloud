@@ -5,9 +5,9 @@ spring:
     name: user-service
   datasource:
     url: jdbc:mysql:///lyou
-      username: root
-      password: 123qweasd
-      driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123qweasd
+    driver-class-name: com.mysql.cj.jdbc.Driver
 eureka:
   client:
     service-url:

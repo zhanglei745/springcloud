@@ -41,7 +41,7 @@ public class AuthController {
      * @param response
      * @return
      */
-    @PostMapping("accredit")
+    @PostMapping("login")
     public ResponseEntity<Void> authentication(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
