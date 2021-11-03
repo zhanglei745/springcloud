@@ -26,25 +26,25 @@ public class JwtTest {
 
     private PrivateKey privateKey;
 
-    @Test
+    //@Test
     public void testRsa() throws Exception {
         RsaUtils.generateKey(pubKeyPath, priKeyPath, "234");
     }
 
-    @Before
+    //@Before
     public void testGetRsa() throws Exception {
         this.publicKey = RsaUtils.getPublicKey(pubKeyPath);
         this.privateKey = RsaUtils.getPrivateKey(priKeyPath);
     }
 
-    @Test
+    //@Test
     public void testGenerateToken() throws Exception {
         // 生成token
         String token = JwtUtils.generateToken(new UserInfo(20L, "jack"), privateKey, 5);
         System.out.println("token = " + token);
     }
 
-    @Test
+    //@Test
     public void testParseToken() throws Exception {
 //        String token = "eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjAsInVzZXJuYW1lIjoiamFjayIsImV4cCI6MTU0MDMwMjU4MX0.KFGDe8V8TwLl5xGqM1brPV50JXf3Z6G4cXPIeYxsqaeeol06BnXNNsyLAbUSrFxloUf-hQqO41O1OrtERllU-JfZXs6MA6rTBSfpar2MJRSZyDGKqfBpPoRED3yZv8oFuzI_94GONqsipmGyQFqWUkhTf9k0tZ5LPRvvGl9tkvc";
         String token = "eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjAsInVzZXJuYW1lIjoiamFjayIsImV4cCI6MTYzMjU0MDYyMn0.GDOGSQzaL-6AtS0JnJzkfpp-YOUAUIHa_urB3B0Ytq6pWLRsWydusgBzjl0iqvITpBWTTh-PPlBYDcIp0a0ySBromYNwExS5Rr7gGEkc_Bqfbhko8il4E7bKQb1ZAJkQ9bR3ljcisESiISmNHN5KEf01cdpvJZOYuQVMDT_c3hE";

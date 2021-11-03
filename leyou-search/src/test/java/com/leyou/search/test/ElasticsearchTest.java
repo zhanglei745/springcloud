@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@RunWith(SpringRunner.class)
 public class ElasticsearchTest {
 
     @Autowired
@@ -34,7 +34,7 @@ public class ElasticsearchTest {
     @Autowired
     private GoodsClient goodsClient;
 
-    @Test
+   // @Test
     public void test(){
         this.elasticsearchTemplate.createIndex(Goods.class);
         this.elasticsearchTemplate.putMapping(Goods.class);

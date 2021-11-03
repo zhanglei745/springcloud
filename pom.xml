@@ -17,6 +17,7 @@
         <module>leyou-search</module>
         <module>leyou-user</module>
         <module>leyou-auth</module>
+        <module>leyou-goods-web</module>
     </modules>
 
     <name>leyou</name>
@@ -121,6 +122,13 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
+
+            <dependency><!--多线程 父线程变量传递 -->
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>2.9.0</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>
