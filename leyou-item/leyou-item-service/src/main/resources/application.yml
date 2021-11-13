@@ -12,7 +12,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:10086/eureka
+      defaultZone: http://106.14.106.98:10086/eureka
   instance:
     lease-renewal-interval-in-seconds: 5 #心跳 续约时间
     lease-expiration-duration-in-seconds: 15 # 心跳过期时间

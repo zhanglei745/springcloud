@@ -9,4 +9,6 @@ public interface ISpecificationService {
     List<SpecGroup> querySpecGroupsByCid(Long cid);
 
     List<SpecParam> queryParams(Long gid,Long cid,Boolean generic,Boolean searching);
+
+    List<SpecGroup> queryGroupWithParam(Long cid);
 }

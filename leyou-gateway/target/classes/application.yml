@@ -46,6 +46,7 @@ leyou:
   jwt:
     cookieName: LY_TOKEN
     pubKeyPath: /Users/zhanglei745/tools/rsa/rsa.pub # 公钥地址
+#    pubKeyPath: /home/springcloud/rsa/rsa.pub # 公钥地址
   filter:
     allowPaths:
       /api/auth

@@ -87,24 +87,32 @@
 </style>
 <script th:inline="javascript">
 
+
 	// sku集合
 	const skus = /*[[${skus}]]*/ [];
     //特有规格参数
-	const specialParamName = /*[[${specialParamName}]]*/ {};
+	//const specialParamName = /*[[${specialParamName}]]*/ {};
 	const specialParamValue = /*[[${specialParamValue}]]*/ {};
     //全部规格参数
 	const specName = /*[[${specName}]]*/ {};
 	const specValue = /*[[${specValue}]]*/ {};
 
     //规格参数组数据
-	const groups = /*[[${groups}]]*/ {}
+	const groups = /*[[${groups}]]*/ {};
+	const brand =/*[[${brand}]]*/ {};
+	const spuDetail = /*[[${spuDetail}]]*/ {};
+	const specialParamName = JSON.parse(/*[[${spuDetail.specialSpec}]]*/ "");
+	const genericSpec = JSON.parse(/*[[${spuDetail.genericSpec}]]*/ "");
 
+	//const specialParamName = /*[[${specialParamName}]]*/ {}
+	const categories = /*[[${categories}]]*/ {};
+	const paramMap = /*[[${paramMap}]]*/ {};
     //初始化选择项
-    const index = {};
+    const indexes = {};
 
 
-    for (let s in specialParamName){
-        index[s] =0;
+    for (let s in paramMap){
+        indexes[s] =0;
 	}
 </script>
 </head>
@@ -201,14 +209,15 @@
 					</div>
 					<div class="clearfix choose">
 						<div id="specification" class="summary-wrap clearfix">
-							<dl v-for="(v,k) in specialParamName" :key="k">
+							<dl v-for="(val,key,index) in specialParamName" :key="index">
 								<dt>
 									<div class="fl title">
-									<i>{{v}}</i>
+									<i>{{paramMap[key]}}</i>
 								</div>
 								</dt>
-								<dd v-for="(str,j) in specialParamValue[k]" :key="j">
-									<a href="javascript:;" :class="{selected: j === index[k]}" @click="index[k]=j">
+								<dd v-for="(str,j) in val" :key="j">
+								<!--<dd v-for="(str,j) in specialParamValue[k]" :key="j"> -->
+									<a href="javascript:;" :class="{selected: j === indexes[key]}" @click="indexes[key]=j">
 										{{str}}<span title="点击取消选择">&nbsp;</span>
 									</a>
 								</dd>
@@ -621,30 +630,37 @@
         el:"#itemApp",
         data:{
             ly,
-			skus,
             specialParamName,
             specialParamValue,
 			specName,
 			specValue,
-			groups,
-			index,
+			indexes,
+			paramMap,
             num:1
         },
-		computed:{
+		computed:{ //计算属性,使用的时候可以当做数据对象data来使用，使用方式和data的定义一样
             sku(){
-                const index = Object.values(this.index).join("-");
-				return this.skus.find(s => s.indexes = index);
+                const index = Object.values(this.indexes).join("_"); //下划线组合成新的字符串
+				return skus.find(s => s.indexes == index);
 			},
 			images(){
                 return this.sku.images ? this.sku.images.split(",") : [''];
 			},
 			group(){
                 groups.forEach(group => {
-                    group.params.forEach(param => {
-                        if (Object.values(specialParamName).includes(param.name)){
-                            param.value = JSON.parse(this.sku.ownSpec)[param.name];
-                        }
-                    })
+                    group.params.forEach(param=>{
+                    	if(param.generic){
+                    		param.v =genericSpec[param.id];
+						}else{
+                    		param.v=JSON.parse(this.sku.ownSpec)[param.id];
+						}
+					})
+					//
+                	// group.params.forEach(param => {
+                    //     if (Object.values(specialParamName).includes(param.name)){
+                    //         param.value = JSON.parse(this.sku.ownSpec)[param.name];
+                    //     }
+                    // })
                 });
 				return groups;
 			}
@@ -719,7 +735,8 @@ $(function(){
 <script type="text/javascript" src="/js/plugins/sui/sui.min.js"></script>
 <script type="text/javascript" src="/js/plugins/jquery.jqzoom/jquery.jqzoom.js"></script>
 <script type="text/javascript" src="/js/plugins/jquery.jqzoom/zoom.js"></script>
-<script type="text/javascript" src="index/index.js"></script>
+<!--<script type="text/javascript" src="index/index.js"></script>
+-->
 </body>
 
 </html>
